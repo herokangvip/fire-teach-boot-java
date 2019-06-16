@@ -2,36 +2,9 @@ server:
   port: 8080
 
 spring:
-    datasource:
-        name: test
-        url: jdbc:mysql://127.0.0.1:3306/depot
-        username: root
-        password: root
-        # Ê¹ÓÃdruidÊı¾İÔ´
-        type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: com.mysql.jdbc.Driver
-        filters: stat
-        maxActive: 20
-        initialSize: 1
-        maxWait: 60000
-        minIdle: 1
-        timeBetweenEvictionRunsMillis: 60000
-        minEvictableIdleTimeMillis: 300000
-        validationQuery: select 'x'
-        testWhileIdle: true
-        testOnBorrow: false
-        testOnReturn: false
-        poolPreparedStatements: true
-        maxOpenPreparedStatements: 20
+  data:
+    elasticsearch:
+      #é›†ç¾¤çš„åç§°é»˜è®¤:elasticsearch
+      cluster-name: elasticsearch
+      cluster-nodes: 192.168.137.201:9300
 
-## ¸ÃÅäÖÃ½ÚµãÎª¶ÀÁ¢µÄ½Úµã£¬ÓĞºÜ¶àÍ¬Ñ§ÈİÒ×½«Õâ¸öÅäÖÃ·ÅÔÚspringµÄ½ÚµãÏÂ£¬µ¼ÖÂÅäÖÃÎŞ·¨±»Ê¶±ğ
-mybatis:
-  mapper-locations: classpath:mapping/*.xml  #×¢Òâ£ºÒ»¶¨Òª¶ÔÓ¦mapperÓ³ÉäxmlÎÄ¼şµÄËùÔÚÂ·¾¶
-  type-aliases-package: com.example.demo.domain  # ×¢Òâ£º¶ÔÓ¦ÊµÌåÀàµÄÂ·¾¶
-
-#pagehelper·ÖÒ³²å¼ş
-pagehelper:
-    helperDialect: mysql
-    reasonable: true
-    supportMethodsArguments: true
-    params: count=countSql
