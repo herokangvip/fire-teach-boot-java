@@ -1,4 +1,4 @@
-package com.example.demo.king.netty.echo;
+package com.example.demo.king.netty.msgpackEcho;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
