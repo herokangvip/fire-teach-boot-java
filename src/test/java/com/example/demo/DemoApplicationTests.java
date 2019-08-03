@@ -22,25 +22,6 @@ public class DemoApplicationTests {
         try {
             User user = new User(null, "name", "pass");
             userService.insert(user);
-           /*for (int i = 0; i < 10000000; i++) {
-               int insert = userService.insert(user);
-                System.out.println(i);
-           }*/
-
-            /*new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    userService.update();
-                }
-            }).start();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    userService.update2();
-                }
-            }).start();*/
-            //int update = userService.update();
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

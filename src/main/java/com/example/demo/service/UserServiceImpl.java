@@ -18,20 +18,22 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    @Transactional(timeout = 20)
+    @Transactional(timeout = 2)
     public int insert(User user) {
         try {
-            userMapper.update();
-
-            int insert = userMapper.insert(user);
-            Thread.sleep(1000L);
-            Thread.sleep(1000L);
-
+            //userMapper.insert(user);
+            Thread.sleep(3000L);
+            //userMapper.select();
             return 1;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException();
         }
+    }
+
+    @Override
+    public User select() {
+        return userMapper.select();
     }
 
     @Override

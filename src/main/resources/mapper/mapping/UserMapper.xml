@@ -21,6 +21,10 @@
       update t_user set password='yy' where `name` LIKE '%nam%';
   </update>
 
+  <select id="select" resultMap="BaseResultMap">
+    select * from t_user limit 1;
+  </select>
+
   <insert id="insertSelective" parameterType="com.example.demo.domain.User" >
     insert into t_user
     <trim prefix="(" suffix=")" suffixOverrides="," >

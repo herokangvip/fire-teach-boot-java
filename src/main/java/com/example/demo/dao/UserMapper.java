@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 public interface UserMapper {
     int insert(User record);
 
+    User select();
+
     int insertSelective(User record);
 
     int update();
