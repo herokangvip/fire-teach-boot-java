@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Created by kangqingqing on 2018/12/8.
+ * Created by k on 2018/12/8.
  */
 public class Test {
 
@@ -28,8 +28,8 @@ public class Test {
 
     private static void testSelectBefore(List<User> users) {
         ArrayList<User> tempList = new ArrayList<>();
-        for (User user:users) {
-            if(user.getId()<100){
+        for (User user : users) {
+            if (user.getId() < 100) {
                 tempList.add(user);
             }
         }
@@ -40,7 +40,7 @@ public class Test {
             }
         });
         ArrayList<String> result = new ArrayList<>();
-        for (User user:tempList) {
+        for (User user : tempList) {
             result.add(user.getName());
         }
         System.out.println("==========");

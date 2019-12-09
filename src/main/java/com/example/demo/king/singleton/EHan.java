@@ -15,7 +15,7 @@ public class EHan {
 
     public void vectorTest() {
         Vector<String> vector = new Vector<String>();
-        for (int i= 0; i< 10; i++) {
+        for (int i = 0; i < 10; i++) {
             vector.add(i + "");
         }
         System.out.println(vector);

@@ -13,7 +13,7 @@ public class UserService2Impl implements UserService2 {
     private UserMapper userMapper;
 
     @Override
-    @Transactional(propagation= Propagation.REQUIRED,rollbackFor=Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int update2() {
         for (int i = 0; i < 1000; i++) {
             userMapper.update2();

@@ -4,6 +4,7 @@ import org.msgpack.annotation.Message;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Message
 public class User {
     private String name;
@@ -33,9 +34,9 @@ public class User {
         this.age = age;
     }
 
-    public static List<User> getUsers(){
+    public static List<User> getUsers() {
         ArrayList<User> users = new ArrayList<>();
-        users.add(new User("小明","10"));
+        users.add(new User("小明", "10"));
         //users.add(new User("冰冰","20"));
         return users;
     }

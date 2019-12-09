@@ -27,7 +27,7 @@ public class EchoFixedLengthClient {
                                     .addLast(new UserHandler2());
                         }
                     });
-            ChannelFuture sync = bootstrap.connect("127.0.0.1",8080).sync();
+            ChannelFuture sync = bootstrap.connect("127.0.0.1", 8080).sync();
             sync.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -37,7 +37,7 @@ public class EchoFixedLengthClient {
     }
 }
 
-class UserHandler2 extends ChannelInboundHandlerAdapter{
+class UserHandler2 extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {

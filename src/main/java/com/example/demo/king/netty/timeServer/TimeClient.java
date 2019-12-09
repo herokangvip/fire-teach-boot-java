@@ -25,7 +25,7 @@ public class TimeClient {
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            ByteBuf buf = Unpooled.copiedBuffer("#_".getBytes());
+                            ByteBuf buf = Unpooled.copiedBuffer("#".getBytes());
                             socketChannel.pipeline()
                                     //.addLast(new LineBasedFrameDecoder(1024))
                                     .addLast(new DelimiterBasedFrameDecoder(1024, buf))
@@ -46,7 +46,7 @@ public class TimeClient {
         }
     }
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         new Thread(() -> new TimeClient().connect("127.0.0.1", 8089)).start();
 
         //控制台输入程序

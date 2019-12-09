@@ -39,7 +39,6 @@ public class EchoFixedLengthServer {
     }
 
 
-
 }
 
 class UserHandler extends ChannelInboundHandlerAdapter {

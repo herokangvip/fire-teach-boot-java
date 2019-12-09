@@ -4,14 +4,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by kangqingqing on 2018/11/16.
+ * Created by k on 2018/11/16.
  */
 public class MyUser {
 
 
     @NotNull(groups = {Update.class})
     public Integer id;
-    @NotBlank(groups = {Add.class,Update.class})
+    @NotBlank(groups = {Add.class, Update.class})
     public String name;
 
     public Integer getId() {

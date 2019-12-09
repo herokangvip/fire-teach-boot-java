@@ -12,7 +12,7 @@ import java.util.concurrent.CountDownLatch;
 
 /**
  * ce
- * Created by kangqingqing on 2018/11/15.
+ * Created by k on 2018/11/15.
  */
 //@PrintLog
 @RestController
@@ -23,22 +23,6 @@ public class MainController {
     public String test(String id) {
         return "Hell World SpringBoot:111";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public static void main(String[] args) throws InterruptedException {

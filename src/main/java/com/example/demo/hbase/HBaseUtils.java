@@ -14,14 +14,17 @@ import java.text.MessageFormat;
 import java.util.*;
 
 
+/**
+ * 请参考hbase-demo
+ */
 public class HBaseUtils {
-    public static void main(String[] args) throws Exception {
-/*        HashMap<String, String> map = new HashMap<>();
+    /*public static void main(String[] args) throws Exception {
+*//*        HashMap<String, String> map = new HashMap<>();
         map.put("country","中国");
         map.put("email","xxxx@163.com");
         insterRow("kang","10001","col",map);
-        HBaseUtils.getData("kang","10001","col","");*/
-        scanData("kang","col", "10001", "10009","10006",3);
+        HBaseUtils.getData("kang","10001","col","");*//*
+        scanData("kang", "col", "10001", "10009", "10006", 3);
         //HBaseUtils.getData("kang","10009","col","");
         //HBaseUtils.insterRow("kang","10003","col","tel","1xxxxx");
 //        HBaseUtils.insterRow("kang","10004","col","tel","1xxxxx");
@@ -107,10 +110,10 @@ public class HBaseUtils {
         table.put(put);
 
         // 批量插入
-        /*
+        *//*
          * List<Put> putList = new ArrayList<Put>(); puts.add(put);
          * table.put(putList);
-         */
+         *//*
         table.close();
         close();
     }
@@ -129,10 +132,10 @@ public class HBaseUtils {
         table.put(put);
 
         // 批量插入
-        /*
+        *//*
          * List<Put> putList = new ArrayList<Put>(); puts.add(put);
          * table.put(putList);
-         */
+         *//*
         table.close();
         close();
     }
@@ -148,10 +151,10 @@ public class HBaseUtils {
         // delete.addColumn(Bytes.toBytes(colFamily),Bytes.toBytes(col));
         table.delete(delete);
         // 批量删除
-        /*
+        *//*
          * List<Delete> deleteList = new ArrayList<Delete>();
          * deleteList.add(delete); table.delete(deleteList);
-         */
+         *//*
         table.close();
         close();
     }
@@ -212,7 +215,7 @@ public class HBaseUtils {
         ResultScanner resultScanner = table.getScanner(scan);
         for (Result result : resultScanner.next(pageSize)) {
             String rowKey = new String(CellUtil.cloneRow(result.rawCells()[0]));
-            if(lastRowKey.equals(rowKey)){
+            if (lastRowKey.equals(rowKey)) {
                 continue;
             }
             showCell(result);
@@ -268,6 +271,6 @@ public class HBaseUtils {
         //    Bytes.toBytes("info"), Bytes.toBytes("id"), CompareOp.EQUAL, Bytes.toBytes("1"));
         //filterList.addFilter(filter);
         //scan.setFilter(filterList);
-    }
+    }*/
 
 }

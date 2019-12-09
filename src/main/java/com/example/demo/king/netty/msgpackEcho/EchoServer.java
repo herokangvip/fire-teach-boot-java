@@ -27,7 +27,7 @@ public class EchoServer {
                             socketChannel.pipeline()
                                     //.addLast(new LineBasedFrameDecoder(1024))
                                     //.addLast(new StringDecoder())
-                                    .addLast(new LengthFieldBasedFrameDecoder(1024,0,2,0,2))
+                                    .addLast(new LengthFieldBasedFrameDecoder(1024, 0, 2, 0, 2))
                                     .addLast(new MsgpackDecoder())
                                     .addLast(new LengthFieldPrepender(2))
                                     .addLast(new MsgpackEncoder())

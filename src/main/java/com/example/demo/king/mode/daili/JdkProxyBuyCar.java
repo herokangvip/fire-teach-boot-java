@@ -14,7 +14,7 @@ public class JdkProxyBuyCar implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) {
         try {
-            method.invoke(object,args);
+            method.invoke(object, args);
             System.out.println("帮你上牌---手续费+500");
         } catch (Exception e) {
             e.printStackTrace();

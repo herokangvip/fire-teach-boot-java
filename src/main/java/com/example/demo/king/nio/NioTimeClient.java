@@ -21,7 +21,7 @@ public class NioTimeClient {
             System.out.println("服务器返回时间：" + resp);
         } catch (Exception e) {
             e.getMessage();
-        }finally {
+        } finally {
             if (in != null) {
                 try {
                     in.close();

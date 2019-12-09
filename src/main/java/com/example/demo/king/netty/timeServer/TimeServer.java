@@ -32,7 +32,7 @@ public class TimeServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            ByteBuf buf = Unpooled.copiedBuffer("#_".getBytes());
+                            ByteBuf buf = Unpooled.copiedBuffer("#".getBytes());
                             socketChannel.pipeline()
                                     //.addLast(new LineBasedFrameDecoder(1024))
                                     .addLast(new DelimiterBasedFrameDecoder(1024, buf))

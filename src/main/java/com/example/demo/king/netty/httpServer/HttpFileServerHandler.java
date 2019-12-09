@@ -15,10 +15,10 @@ public class HttpFileServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        FullHttpRequest request = (FullHttpRequest)msg;
+        FullHttpRequest request = (FullHttpRequest) msg;
         String uri = request.getUri();
         FullHttpResponse response = new DefaultFullHttpResponse(
-                HTTP_1_1, OK, Unpooled.wrappedBuffer(("请求地址是:"+uri)
+                HTTP_1_1, OK, Unpooled.wrappedBuffer(("请求地址是:" + uri)
                 .getBytes()));
         response.headers().set(CONTENT_TYPE, "text/plain");
         response.headers().set(CONTENT_LENGTH,

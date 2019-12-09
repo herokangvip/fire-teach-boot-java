@@ -15,27 +15,25 @@ public class Test {
         ReferenceQueue queue = new ReferenceQueue();
 
 
-        WeakReference<byte[]> reference1 = new WeakReference<>(new byte[1024 * 1024 * 3],queue);
-        WeakReference<byte[]> reference2 = new WeakReference<>(new byte[1024 * 1024 * 3],queue);
-        WeakReference<byte[]> reference3 = new WeakReference<>(new byte[1024 * 1024 * 3],queue);
+        WeakReference<byte[]> reference1 = new WeakReference<>(new byte[1024 * 1024 * 3], queue);
+        WeakReference<byte[]> reference2 = new WeakReference<>(new byte[1024 * 1024 * 3], queue);
+        WeakReference<byte[]> reference3 = new WeakReference<>(new byte[1024 * 1024 * 3], queue);
 
         map.put(reference1, 1);
         map.put(reference2, 2);
         map.put(reference3, 3);
-        WeakReference<byte[]> reference4 = new WeakReference<>(new byte[1024 * 1024 * 3],queue);
+        WeakReference<byte[]> reference4 = new WeakReference<>(new byte[1024 * 1024 * 3], queue);
         map.put(reference4, 4);
 
-        SoftReference<byte[]> reference11 = new SoftReference<>(new byte[1024 * 1024 * 3],queue);
-        SoftReference<byte[]> reference12 = new SoftReference<>(new byte[1024 * 1024 * 3],queue);
-        SoftReference<byte[]> reference13 = new SoftReference<>(new byte[1024 * 1024 * 3],queue);
-        SoftReference<byte[]> reference14 = new SoftReference<>(new byte[1024 * 1024 * 3],queue);
-        SoftReference<byte[]> reference15 = new SoftReference<>(new byte[1024 * 1024 * 3],queue);
-        SoftReference<byte[]> reference16 = new SoftReference<>(new byte[1024 * 1024 * 3],queue);
-        SoftReference<byte[]> reference17 = new SoftReference<>(new byte[1024 * 1024 * 3],queue);
-        SoftReference<byte[]> reference18 = new SoftReference<>(new byte[1024 * 1024 * 3],queue);
-        SoftReference<byte[]> reference19 = new SoftReference<>(new byte[1024 * 1024 * 3],queue);
-
-
+        SoftReference<byte[]> reference11 = new SoftReference<>(new byte[1024 * 1024 * 3], queue);
+        SoftReference<byte[]> reference12 = new SoftReference<>(new byte[1024 * 1024 * 3], queue);
+        SoftReference<byte[]> reference13 = new SoftReference<>(new byte[1024 * 1024 * 3], queue);
+        SoftReference<byte[]> reference14 = new SoftReference<>(new byte[1024 * 1024 * 3], queue);
+        SoftReference<byte[]> reference15 = new SoftReference<>(new byte[1024 * 1024 * 3], queue);
+        SoftReference<byte[]> reference16 = new SoftReference<>(new byte[1024 * 1024 * 3], queue);
+        SoftReference<byte[]> reference17 = new SoftReference<>(new byte[1024 * 1024 * 3], queue);
+        SoftReference<byte[]> reference18 = new SoftReference<>(new byte[1024 * 1024 * 3], queue);
+        SoftReference<byte[]> reference19 = new SoftReference<>(new byte[1024 * 1024 * 3], queue);
 
 
         //System.out.println(map.size());
@@ -43,8 +41,8 @@ public class Test {
         Thread.sleep(1000L);
 
         System.out.println("map的key:value值====");
-        for (Map.Entry<Object,Object> entry: map.entrySet()) {
-            System.out.println(entry.getKey()+":"+entry.getValue());
+        for (Map.Entry<Object, Object> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + ":" + entry.getValue());
         }
 
 
@@ -74,7 +72,7 @@ public class Test {
 
 
         Thread.sleep(1000L);
-        System.out.println("回收后map的size===="+map.size());
+        System.out.println("回收后map的size====" + map.size());
 
 
     }

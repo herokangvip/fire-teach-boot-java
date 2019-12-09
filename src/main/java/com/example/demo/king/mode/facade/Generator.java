@@ -1,7 +1,7 @@
 package com.example.demo.king.mode.facade;
 
 public class Generator {
-    public static void generat(){
+    public static void generat() {
         //生成controller代码
         ControllerGenerator controllerGenerator = new ControllerGenerator();
         controllerGenerator.generator();

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 
 /**
- * Created by kangqingqing on 2018/11/16.
+ * Created by k on 2018/11/16.
  */
 @Configuration//声明这是一个spring管理的配置bean
 @Aspect//声明这是一个aop切面类

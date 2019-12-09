@@ -31,7 +31,7 @@ public class Proxy {
                     .addModifiers(Modifier.PUBLIC)
                     .addAnnotation(Override.class)
                     .returns(method.getReturnType())
-                    .addParameter(method.getParameterTypes()[0],"param")
+                    .addParameter(method.getParameterTypes()[0], "param")
                     .addCode("try {\n")
                     .addStatement("\t$T method = " + interfaceClazz.getName() + ".class.getMethod(\"" + method.getName() + "\",Object.class)", Method.class)
                     // 为了简单起见，这里参数直接写死为空

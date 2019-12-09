@@ -12,7 +12,6 @@ public class JdbcTemplate implements Connection {
     }
 
 
-
     @Override
     public void update(Object object) {
         try {

@@ -28,7 +28,7 @@ public class EchoClient {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024))
-                                    .addLast(new LengthFieldBasedFrameDecoder(1024,0,2,0,2))
+                                    .addLast(new LengthFieldBasedFrameDecoder(1024, 0, 2, 0, 2))
                                     .addLast(new MsgpackDecoder())
                                     .addLast(new LengthFieldPrepender(2))
                                     .addLast(new MsgpackEncoder())
@@ -47,7 +47,7 @@ public class EchoClient {
                                                 ctx.writeAndFlush(buf);
                                             }*/
                                             List<User> users = User.getUsers();
-                                            for (User user:users) {
+                                            for (User user : users) {
                                                 ctx.write(user);
                                             }
                                             ctx.flush();

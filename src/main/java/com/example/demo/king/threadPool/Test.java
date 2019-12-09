@@ -3,7 +3,7 @@ package com.example.demo.king.threadPool;
 import java.util.concurrent.*;
 
 public class Test {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         //ExecutorService executorService = Executors.newFixedThreadPool(1);
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, 1, 10L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(1));
         threadPoolExecutor.allowsCoreThreadTimeOut();

@@ -11,7 +11,7 @@ public class Test {
         buyCar.buyCar();
 
         CglibProxyBuyCar cglibProxyBuyCar = new CglibProxyBuyCar();
-        MySelfBuyCar proxy = (MySelfBuyCar)cglibProxyBuyCar.getProxy(MySelfBuyCar.class);
+        MySelfBuyCar proxy = (MySelfBuyCar) cglibProxyBuyCar.getProxy(MySelfBuyCar.class);
         proxy.buyCar();
     }
 }

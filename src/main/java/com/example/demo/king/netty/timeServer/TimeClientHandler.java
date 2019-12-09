@@ -19,7 +19,7 @@ public class TimeClientHandler extends ChannelInboundHandlerAdapter {
 
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         for (int i = 0; i < 100; i++) {
-            byte[] req = "0123456789#_".getBytes();
+            byte[] req = "0123456789#".getBytes();
             ByteBuf firstMessage = Unpooled.buffer(req.length);
             firstMessage.writeBytes(req);
             ctx.writeAndFlush(firstMessage);
@@ -32,7 +32,7 @@ public class TimeClientHandler extends ChannelInboundHandlerAdapter {
         byte[] req = new byte[buf.readableBytes()];
         buf.readBytes(req);
         String body = new String(req, "UTF-8");*/
-        String body = (String)msg;
+        String body = (String) msg;
         sb.append(body);
         System.out.println("now is :" + body);
         System.out.println("=============" + i);

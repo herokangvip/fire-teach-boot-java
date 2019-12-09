@@ -21,14 +21,14 @@ public class HttpFileServer {
         ServerBootstrap serverBootstrap = new ServerBootstrap();
         try {
             serverBootstrap.group(boosGroup, workerGroup).option(ChannelOption.SO_BACKLOG, 1024)
-                    .childOption(ChannelOption.SO_KEEPALIVE,true)
+                    .childOption(ChannelOption.SO_KEEPALIVE, true)
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             socketChannel.pipeline()
                                     .addLast(new HttpServerCodec())
-                                    .addLast(new HttpObjectAggregator(1024*10*1024))
+                                    .addLast(new HttpObjectAggregator(1024 * 10 * 1024))
                                     //.addLast(new HttpResponseEncoder())
                                     //.addLast(new ChunkedWriteHandler())
                                     .addLast(new HttpContentDecompressor())

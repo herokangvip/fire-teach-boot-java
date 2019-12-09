@@ -51,7 +51,7 @@ public class Proxy {
         javaFile.writeTo(new File("D:\\myworkspase\\test\\src\\main\\java"));
         // 编译
         JavaCompiler.compile(new File("D:\\myworkspase\\test\\src\\main\\java\\com\\example\\demo\\proxy\\instance\\MyJdbcTemplate.java"));
-        URL[] urls = new URL[] {new URL("file:/D:\\myworkspase\\test\\src\\main\\java\\com\\example\\demo\\proxy\\instance\\MyJdbcTemplate.java")};
+        URL[] urls = new URL[]{new URL("file:/D:\\myworkspase\\test\\src\\main\\java\\com\\example\\demo\\proxy\\instance\\MyJdbcTemplate.java")};
         URLClassLoader classLoader = new URLClassLoader(urls);
         Class clazz = classLoader.loadClass("com.example.demo.king.proxy.instance.MyJdbcTemplate");
         Constructor constructor = clazz.getConstructor(Connection.class);

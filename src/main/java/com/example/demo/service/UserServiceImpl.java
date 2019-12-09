@@ -37,14 +37,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(propagation= Propagation.REQUIRED,rollbackFor=Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int update() {
         userMapper.update();
         userService2.update2();
         return userMapper.update();
     }
+
     @Override
-    @Transactional(propagation=Propagation.REQUIRED,rollbackFor=Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int update2() {
         return userMapper.update2();
     }

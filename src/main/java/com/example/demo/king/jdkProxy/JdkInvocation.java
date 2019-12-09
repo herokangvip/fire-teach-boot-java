@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 
 public class JdkInvocation implements java.lang.reflect.InvocationHandler {
     private JdbcTemplate template = new JdbcTemplate();
+
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) {
         try {

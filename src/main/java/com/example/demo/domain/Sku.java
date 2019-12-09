@@ -10,7 +10,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 //        type：对应在索引库中的类型
 //        shards：分片数量，默认5
 //        replicas：副本数量，默认1
-@Document(indexName = "sku_index",type = "sku_type",shards = 1,replicas = 1)
+@Document(indexName = "sku_index", type = "sku_type", shards = 1, replicas = 1)
 public class Sku {
     @Id
     private Long id;
