@@ -8,7 +8,7 @@ public class JdbcTemplate2 implements Connection {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("add");
+        System.out.println("add2");
         return null;
     }
 
@@ -19,7 +19,7 @@ public class JdbcTemplate2 implements Connection {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("delete");
+        System.out.println("delete2");
     }
 
     @Override

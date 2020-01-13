@@ -144,11 +144,11 @@
 
         <!-- cglib-->
         <!-- https://mvnrepository.com/artifact/cglib/cglib -->
-        <!--<dependency>
+        <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
             <version>3.2.9</version>
-        </dependency>-->
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.ow2.asm/asm -->
         <!--<dependency>

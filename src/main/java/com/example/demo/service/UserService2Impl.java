@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.UserMapper;
+import com.example.demo.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,5 +20,11 @@ public class UserService2Impl implements UserService2 {
             userMapper.update2();
         }
         return userMapper.update2();
+    }
+    @Override
+    @Transactional
+    public int insert2(User user) {
+        int insert = userMapper.insert(user);
+        return insert;
     }
 }

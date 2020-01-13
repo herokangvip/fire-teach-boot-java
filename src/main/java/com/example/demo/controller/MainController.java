@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.annotation.PrintLog;
+import com.example.demo.service.UserService;
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,14 @@ public class MainController {
     //@PrintLog
     @RequestMapping("/test")
     public String test(String id) {
+        return "Hell World SpringBoot:111";
+    }
+
+    @Autowired
+    private UserService userService;
+    @RequestMapping("/test2")
+    public String test2() {
+        System.out.println(userService.getClass());
         return "Hell World SpringBoot:111";
     }
 

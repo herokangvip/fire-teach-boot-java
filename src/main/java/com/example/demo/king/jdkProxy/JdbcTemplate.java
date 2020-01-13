@@ -8,7 +8,8 @@ public class JdbcTemplate implements Connection {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("add");
+        System.out.println("add1");
+        new JdbcTemplate().delete();
         return null;
     }
 
@@ -19,7 +20,7 @@ public class JdbcTemplate implements Connection {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("delete");
+        System.out.println("delete1");
     }
 
     @Override
@@ -29,7 +30,7 @@ public class JdbcTemplate implements Connection {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("update");
+        System.out.println("update1");
     }
 
     @Override
@@ -39,6 +40,6 @@ public class JdbcTemplate implements Connection {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("find");
+        System.out.println("find1");
     }
 }
