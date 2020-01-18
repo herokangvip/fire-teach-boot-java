@@ -10,10 +10,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.kafka.annotation.EnableKafka;
 
 @SpringBootApplication
 @MapperScan(basePackages = "com.example.demo.dao")
-
+@EnableKafka
 public class DemoApplication {
 
     public static void main(String[] args) {
