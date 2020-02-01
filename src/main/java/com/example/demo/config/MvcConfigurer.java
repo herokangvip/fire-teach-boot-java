@@ -24,7 +24,7 @@ public class MvcConfigurer implements WebMvcConfigurer {
 
             @Override
             public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-                System.out.println("===拦截器postHandle执行了");
+                //System.out.println("===拦截器postHandle执行了");
             }
 
             @Override

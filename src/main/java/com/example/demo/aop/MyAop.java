@@ -13,17 +13,17 @@ import java.util.Arrays;
 @Configuration//声明这是一个spring管理的配置bean
 @Aspect//声明这是一个aop切面类
 public class MyAop {
-    @Before("execution(* com.example.demo.controller..*.*(..))")
+    //@Before("execution(* com.example.demo.controller..*.*(..))")
     public void before(JoinPoint joinPoint) {
         System.out.println("==== aop before");
     }
 
-    @After("execution(* com.example.demo.controller..*.*(..))")
+    //@After("execution(* com.example.demo.controller..*.*(..))")
     public void after(JoinPoint joinPoint) {
         System.out.println("==== aop after");
     }
 
-    @AfterThrowing("execution(* com.example.demo.controller..*.*(..))")
+    //@AfterThrowing("execution(* com.example.demo.controller..*.*(..))")
     public void afterThrowing(JoinPoint joinPoint) {
         System.out.println("==== aop afterThrowing");
     }
