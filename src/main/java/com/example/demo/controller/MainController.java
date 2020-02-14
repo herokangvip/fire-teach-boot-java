@@ -1,9 +1,16 @@
 package com.example.demo.controller;
 
 import com.example.demo.annotation.PrintLog;
+import com.example.demo.dao.OrderGroupMapper;
+import com.example.demo.dao.OrderTotalMapper;
+import com.example.demo.domain.OrderGroup;
+import com.example.demo.domain.OrderTotal;
+import com.example.demo.domain.vo.OrderTotalVo;
+import com.example.demo.domain.vo.OrderVo;
 import com.example.demo.service.UserService;
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnel;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Controller;
@@ -12,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -19,12 +27,13 @@ import java.util.concurrent.CountDownLatch;
  * Created by k on 2018/11/15.
  */
 //@PrintLog
-@RestController
+@Controller
 public class MainController {
 
     //kafka服务
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
+
 
     /**
      * 下单接口
@@ -118,13 +127,6 @@ public class MainController {
 
 
     public static void main(String[] args) throws InterruptedException {
-        BloomFilter<Integer> bloomFilter = BloomFilter.create((Funnel<Integer>) (arg0, arg1)
-                  -> arg1.putInt(arg0), 10000000, 0.001d);
-        for (int i = 0; i < 100000000; i++) {
-            bloomFilter.put(i);
-        }
-        System.out.println("====" + bloomFilter.approximateElementCount());
-        new CountDownLatch(1).await();
 
     }
 }

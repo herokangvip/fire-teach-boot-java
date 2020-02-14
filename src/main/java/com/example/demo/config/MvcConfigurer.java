@@ -5,6 +5,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
@@ -14,6 +15,10 @@ import java.util.List;
 
 @Configuration
 public class MvcConfigurer implements WebMvcConfigurer {
+    /**
+     * 拦截器
+     * @param registry
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new HandlerInterceptor() {
@@ -32,6 +37,13 @@ public class MvcConfigurer implements WebMvcConfigurer {
 
             }
         });
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        //静态资源放行
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+
     }
 
     @Override

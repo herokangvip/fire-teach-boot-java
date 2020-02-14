@@ -11,6 +11,14 @@ spring:
       #集群的名称默认:elasticsearch
       cluster-name: elasticsearch
       cluster-nodes: 192.168.137.201:9300
+      properties:
+        transport:
+          tcp:
+            connect_timeout: 2s
+            #存储索引的位置
+            #spring.data.elasticsearch.properties.path.home=/data/project/target/elastic
+            #连接超时的时间
+            #spring.data.elasticsearch.properties.transport.tcp.connect_timeout=120s
   kafka:
     bootstrap-servers: 127.0.0.1:9092
     producer:

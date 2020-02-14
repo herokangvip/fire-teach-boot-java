@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import com.example.demo.config.YmlConfigFactory;
+import com.example.demo.dao.OrderGroupMapper;
+import com.example.demo.domain.OrderGroup;
 import com.example.demo.domain.User;
 import com.example.demo.service.UserService;
 import org.junit.Test;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {DemoApplication.class})
@@ -32,4 +35,12 @@ public class DemoApplicationTests {
     }
 
 
+    @Autowired
+    private OrderGroupMapper orderGroupMapper;
+
+    @Test
+    public void order() {
+        List<OrderGroup> list = orderGroupMapper.select(20200208);
+        System.out.println("-");
+    }
 }

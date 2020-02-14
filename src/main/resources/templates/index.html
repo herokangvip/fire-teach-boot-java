@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <script src="../static/js/vue.js" type="application/javascript"></script>
+    <script src="../static/js/element.js" type="application/javascript"></script>
+    <script src="../static/js/echarts.js" type="application/javascript"></script>
+    <script src="../static/js/axios.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="../static/css/element.css">
+</head>
+<style>
+    .div-inline{ display:inline}
+</style>
+<body>
+<div id="app">
+    <div id="total" style="width: 600px;height:120px;">
+        <font size="6" color="blue">累计下单量:</font>
+        <font size="6" color="blue" id="totalNum"></font>
+        <br>
+        <font size="6" color="blue">累计下单金额:</font>
+        <font size="6" color="blue" id="totalMoney"></font>
+    </div>
+    <div style="width: 1000px;height:600px;">
+        <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+        <div id="main" style="width: 400px;height:300px;float:left;"></div>
+        <div id="groupMain" style="width: 400px;height:300px;float:left;"></div>
+    </div>
+
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            totalNum: 0,
+            totalMoney: 0,
+            option: {
+                title: {
+                    text: '地区订单统计'
+                },
+                tooltip: {},
+                legend: {
+                    data: ['订单数']
+                },
+                xAxis: {
+                    data: ["北京", "上海", "天津", "广州", "深圳"]
+                },
+                yAxis: {},
+                series: [{
+                    name: '订单数',
+                    type: 'bar',
+                    data: [0, 0, 0, 0, 0]
+                }]
+            },
+            groupOption: {
+                title: {
+                    text: '地区下单金额统计'
+                },
+                tooltip: {},
+                legend: {
+                    data: ['订单金额']
+                },
+                xAxis: {
+                    data: ["北京", "上海", "天津", "广州", "深圳"]
+                },
+                yAxis: {},
+                series: [{
+                    name: '订单金额',
+                    type: 'bar',
+                    data: [0, 0, 0, 0, 0]
+                }]
+            }
+        },
+        create() {
+            //this.myChart = echarts.init(document.getElementById('main'));
+        },
+        methods: {
+            timer() {
+                let perMyChart = echarts.init(document.getElementById('main'));
+                let groupMyChart = echarts.init(document.getElementById('groupMain'));
+                axios({
+                    method: 'post',
+                    url: 'orderGroupData'
+                }).then(function (res) {
+                    //console.log("===:"+JSON.stringify(res.data.orderGroupVo))
+                    //var dd = JSON.parse(res.data)
+                    //服务端要严格输出json数据，属性名也要加双引号
+                    perMyChart.setOption(res.data);
+                });
+                axios({
+                    method: 'post',
+                    url: 'orderGroupMoneyData'
+                }).then(function (res) {
+                    //console.log("===:"+JSON.stringify(res.data));
+                    groupMyChart.setOption(res.data);
+                });
+                axios({
+                    method: 'post',
+                    url: 'orderTotalData'
+                }).then(function (res) {
+                    document.getElementById('totalNum').innerText = res.data.totalNum;
+                    document.getElementById('totalMoney').innerText = res.data.totalMoney;
+                });
+            }
+        },
+        //生命周期函数
+        mounted() {
+            setInterval(this.timer, 1000);
+            // 基于准备好的dom，初始化echarts实例
+            let perMyChart = echarts.init(document.getElementById('main'));
+            // 使用刚指定的配置项和数据显示图表。
+            perMyChart.setOption(this.option);
+            // 基于准备好的dom，初始化echarts实例
+            let perMyChart2 = echarts.init(document.getElementById('groupMain'));
+            // 使用刚指定的配置项和数据显示图表。
+            perMyChart2.setOption(this.groupOption);
+        },
+        beforeDestroy() {
+            clearInterval(this.timer())
+        }
+    })
+</script>
+</body>
+</html>

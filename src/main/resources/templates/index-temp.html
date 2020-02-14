@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <script src="js/vue.js" type="application/javascript"></script>
+    <script src="js/element.js" type="application/javascript"></script>
+    <script src="js/echarts.js" type="application/javascript"></script>
+    <script src="js/axios.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="css/element.css">
+</head>
+<body>
+<div id="app">
+    <div id="total" style="width: 600px;height:200px;">
+        累计下单量:<font color="blue" id="totalNum">99</font><br>
+        累计下单金额:<font color="blue" id="totalMoney">99</font>
+        <!--<el-input placeholder="累计下单量"
+                  v-model="totalNum" :disabled="true">
+        </el-input>
+        <el-input placeholder="累计下单金额"
+                v-model="totalMoney" :disabled="true">
+        </el-input>-->
+    </div>
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+</div>
+
+<script>
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    // 使用刚指定的配置项和数据显示图表。
+    var option = {
+        title: {
+            text: '地区订单统计'
+        },
+        tooltip: {},
+        legend: {
+            data: ['订单金额']
+        },
+        xAxis: {
+            data: ["北京", "上海", "天津", "广州", "深圳"]
+        },
+        yAxis: {},
+        series: [{
+            name: '订单金额',
+            type: 'bar',
+            data: [5, 20, 36, 10, 10]
+        }]
+    };
+    myChart.setOption(this.option);
+
+    var int = self.setInterval("clock()", 1000);
+
+    function clock() {
+        axios({
+            method: 'post',
+            url: 'orderData'
+        }).then(function (res) {
+            //服务端要严格输出json数据，属性名也要加双引号
+            myChart.setOption(res.data);
+            //document.getElementById('totalNum').innerHTML(99);
+            //document.getElementById('totalMoney').innerText(99.9);
+        })
+    }
+
+
+    new Vue({
+        el: '#app',
+        data: {
+            totalNum: 0,
+            totalMoney: 0,
+        },
+        methods: {
+            timer(){
+                console.log("===")
+            }
+        },
+        //生命周期函数
+        mounted() {
+            setInterval(this.timer,1000)
+        },
+        beforeDestroy() {
+            clearInterval(this.timer())
+        }
+    })
+</script>
+</body>
+</html>

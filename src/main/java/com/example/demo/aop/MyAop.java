@@ -41,9 +41,9 @@ public class MyAop {
             String methodName = pjp.getSignature().getName();
             String className = pjp.getSignature().getDeclaringType().getName();
             Object[] args = pjp.getArgs();
-            System.out.println("====类:" + className + ",方法:" + methodName + ",入参：" + Arrays.toString(args));
+            //System.out.println("====类:" + className + ",方法:" + methodName + ",入参：" + Arrays.toString(args));
             Object proceed = pjp.proceed();
-            System.out.println("====类:" + className + ",方法:" + methodName + ",出参：" + proceed);
+            //System.out.println("====类:" + className + ",方法:" + methodName + ",出参：" + proceed);
             return proceed;
         } catch (Throwable throwable) {
             throwable.printStackTrace();
