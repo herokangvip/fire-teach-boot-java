@@ -14,16 +14,15 @@ public class SortTest01 {
         int[] arr = new int[]{89, 32, 55, 543, 7, 8};
         sort(arr);
     }
+
     private static void sort(int[] arr) {
         for (int j = 0; j < arr.length; j++) {
-            for (int i = 0; i < arr.length - j; i++) {
-                if (i != arr.length - j - 1) {
-                    int before = arr[i];
-                    int after = arr[i + 1];
-                    if (before > after) {
-                        arr[i] = after;
-                        arr[i + 1] = before;
-                    }
+            for (int i = 0; i < arr.length - j - 1; i++) {
+                int before = arr[i];
+                int after = arr[i + 1];
+                if (before > after) {
+                    arr[i] = after;
+                    arr[i + 1] = before;
                 }
             }
             System.out.println(Arrays.toString(arr));
