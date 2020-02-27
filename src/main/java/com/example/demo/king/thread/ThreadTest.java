@@ -27,6 +27,6 @@ public class ThreadTest {
     }
 
     public static void main(String[] args) throws Exception{
-        Connection connection = ConnectionFactory.factory.getConnection();
+        Connection connection = ConnectionEnum.instance.getConnection();
     }
 }
