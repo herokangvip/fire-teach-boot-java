@@ -14,7 +14,7 @@ import org.springframework.kafka.annotation.EnableKafka;
 
 @SpringBootApplication
 @MapperScan(basePackages = "com.example.demo.dao")
-//@EnableKafka
+@EnableKafka
 public class DemoApplication {
 
     public static void main(String[] args) {

@@ -18,6 +18,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/flink")
 public class FlinkOrderController {
+
+    private int day = 20200515;
     /**
      * 电商监控大屏首页
      */
@@ -35,7 +37,7 @@ public class FlinkOrderController {
     @RequestMapping("/orderGroupData")
     @ResponseBody
     public String orderGroupData() {
-        List<OrderGroup> list = orderGroupMapper.select(20200208);
+        List<OrderGroup> list = orderGroupMapper.select(day);
         if (list != null && list.size() > 0) {
             //北京、上海、天津、广州、深圳
             Map<String, OrderGroup> map = new HashMap<>();
@@ -63,7 +65,7 @@ public class FlinkOrderController {
     @RequestMapping("/orderGroupMoneyData")
     @ResponseBody
     public String orderGroupMoneyData() {
-        List<OrderGroup> list = orderGroupMapper.select(20200208);
+        List<OrderGroup> list = orderGroupMapper.select(day);
         //List<OrderGroup> list = null;
         if (list != null && list.size() > 0) {
             //北京、上海、天津、广州、深圳
@@ -96,7 +98,7 @@ public class FlinkOrderController {
     @RequestMapping("/orderTotalData")
     @ResponseBody
     public OrderTotalVo orderTotalData() {
-        OrderTotal select = orderTotalMapper.select(20200208);
+        OrderTotal select = orderTotalMapper.select(day);
         OrderTotalVo orderTotalVo = new OrderTotalVo();
         if (select == null) {
             orderTotalVo.setTotalNum("0");

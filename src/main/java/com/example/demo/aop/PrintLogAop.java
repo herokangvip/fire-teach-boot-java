@@ -1,8 +1,13 @@
 package com.example.demo.aop;
 
+import com.example.demo.controller.TestLogController;
+import com.example.demo.log.TraceLog;
+import com.example.demo.log.TraceLogHolder;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
@@ -12,7 +17,10 @@ import java.util.Arrays;
  */
 @Configuration//声明这是一个spring管理的配置bean
 @Aspect//声明这是一个aop切面类
-public class MyAop {
+public class PrintLogAop {
+    private static Logger logger = new TraceLog(LoggerFactory.getLogger(TestLogController.class));
+
+
     //@Before("execution(* com.example.demo.controller..*.*(..))")
     public void before(JoinPoint joinPoint) {
         System.out.println("==== aop before");
@@ -38,12 +46,15 @@ public class MyAop {
     @Around("execution(* com.example.demo.controller..*.*(..))")//某个包及其子包下所有类的所有方法
     public Object simpleAop(final ProceedingJoinPoint pjp) throws Throwable {
         try {
+            TraceLogHolder.put(TraceLogHolder.beginTime, System.currentTimeMillis() + "");
             String methodName = pjp.getSignature().getName();
             String className = pjp.getSignature().getDeclaringType().getName();
             Object[] args = pjp.getArgs();
-            //System.out.println("====类:" + className + ",方法:" + methodName + ",入参：" + Arrays.toString(args));
+            logger.info("begin-args:" + Arrays.toString(args));
             Object proceed = pjp.proceed();
-            //System.out.println("====类:" + className + ",方法:" + methodName + ",出参：" + proceed);
+            logger.info("end-res:" + Arrays.toString(args));
+            logger.info("===耗时:{}ms", System.currentTimeMillis() - Long.parseLong(TraceLogHolder.get(TraceLogHolder.beginTime)));
+            TraceLogHolder.remove();
             return proceed;
         } catch (Throwable throwable) {
             throwable.printStackTrace();

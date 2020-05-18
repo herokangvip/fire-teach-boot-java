@@ -31,7 +31,7 @@ import java.util.concurrent.CountDownLatch;
 public class MainController {
 
     //kafka服务
-    @Autowired
+    @Autowired(required = false)
     private KafkaTemplate<String, String> kafkaTemplate;
 
 
