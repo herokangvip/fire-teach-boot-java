@@ -14,7 +14,8 @@ public class MyKafkaConsumer2 {
      * consumer.partitionsFor(topic)
      * 		查询topic的分区信息,当本地没有这个topic的元数据信息的时候会往服务端发送的远程请求
      * 		注意: 没有权限的topic的时候会抛出异常(org.apache.kafka.common.errors.TopicAuthorizationException)
-     *
+     *     * consumer.assignment()
+     *      *      查询指定方式或订阅方式分配到当前消费者的分区信息，还未订阅或重新分配时为空
      * consumer.position(new TopicPartition(topic, 0))
      * 		获取下次拉取的数据的offset, 如果没有offset记录则会抛出异常
      *
