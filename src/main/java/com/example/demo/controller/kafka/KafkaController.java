@@ -1,17 +1,24 @@
 package com.example.demo.controller.kafka;
 
+import lombok.SneakyThrows;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.TopicPartition;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.PostConstruct;
+import java.sql.Time;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 对外提供http接口，可以从指定offset开始消费，直接提交offset即可，方法2为测试先取消订阅再重新订阅的功能
@@ -19,12 +26,29 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Controller
 @RequestMapping("/kafka")
 public class KafkaController {
+    @Value("${promotion.kafka.consumer.resetToTime:05:00:00}")
+    private String resetToTime;
+
+    @PostConstruct
+    public void init() {
+        System.out.println("kkkkk:" + resetToTime);
+    }
 
     private static KafkaConsumer<String, String> consumer = null;
     private static AtomicBoolean running = new AtomicBoolean(true);
     private static Properties props = new Properties();
     private static Collection<String> topics = Collections.singletonList("testoffset");
     private static ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+
+    //重置开关
+    private static AtomicBoolean resetOffsetSwitch = new AtomicBoolean(false);
+    //消费暂停状态
+    private static AtomicBoolean consumerWaitingState = new AtomicBoolean(false);
+
+
+    private static ReentrantLock consumerLock = new ReentrantLock(true);
+    private static Condition condition = consumerLock.newCondition();
 
     static {
 
@@ -53,23 +77,34 @@ public class KafkaController {
             }
         });
         executorService.submit(new Runnable() {
+            @SneakyThrows
             @Override
             public void run() {
                 while (running.get()) {
+
                     //没有分到分区的消费者record size=0
-                    ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(3)); //拉取数据
-                    if (records != null && !records.isEmpty()) {
-                        for (ConsumerRecord<String, String> record : records) {
-                            System.out.printf("====:partition = %s,offset = %d, key = %s, value= %s%n", record.partition(), record.offset(), record.key(), record.value());
+                    boolean tryLock = consumerLock.tryLock();
+                    if (tryLock) {
+                        try {
+                            boolean resetOffsetSwitchState = resetOffsetSwitch.get();
+                            if (resetOffsetSwitchState) {
+                                System.out.println("执行暂停消费");
+                                consumerWaitingState.set(true);
+                                condition.await();
+                            }
+                            ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(3)); //拉取数据
+                            if (records != null && !records.isEmpty()) {
+                                for (ConsumerRecord<String, String> record : records) {
+                                    System.out.printf("====:partition = %s,offset = %d, key = %s, value= %s%n", record.partition(), record.offset(), record.key(), record.value());
+                                }
+                            }
+                            Thread.sleep(1000);
+                            if (!running.get()) {
+                                break;
+                            }
+                        } finally {
+                            consumerLock.unlock();
                         }
-                    }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (!running.get()) {
-                        break;
                     }
                 }
             }
@@ -79,10 +114,32 @@ public class KafkaController {
     @RequestMapping("/setOffset")
     @ResponseBody
     public String setOffset(Integer offset) throws InterruptedException {
-        TopicPartition topicPartition = new TopicPartition("testoffset", 0);
-        consumer.seek(topicPartition, offset);
+        resetOffsetSwitch.set(true);
+        boolean tryLock = consumerLock.tryLock(10L, TimeUnit.SECONDS);
+        if (tryLock) {
+            try {
+                System.out.println("获取到锁");
+                while (true) {
+                    if (consumerWaitingState.get()) {
+                        TopicPartition topicPartition = new TopicPartition("testoffset", 0);
+                        consumer.seek(topicPartition, offset);
+                        consumerWaitingState.set(false);
+                        resetOffsetSwitch.set(false);
+                        condition.signalAll();
+                        break;
+                    }
+                }
+            } finally {
+                consumerLock.unlock();
+            }
+        } else {
+            System.out.println("没有获取到锁");
+
+        }
+
         return "ok";
     }
+
     @RequestMapping("/getOffset")
     @ResponseBody
     public String getOffset(Long time) throws InterruptedException {
