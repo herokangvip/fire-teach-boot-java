@@ -4,7 +4,6 @@ server:
 mybatis:
   mapper-locations: classpath:mapper/mapping/*.xml
   type-aliases-package: com.example.demo.domain
-aaa: abc
 spring:
   data:
     elasticsearch:

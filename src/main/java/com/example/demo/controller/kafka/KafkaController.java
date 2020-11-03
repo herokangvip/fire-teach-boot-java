@@ -1,6 +1,6 @@
 package com.example.demo.controller.kafka;
 
-import lombok.SneakyThrows;
+import com.example.demo.config.SpringContextHolder;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.TopicPartition;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.PostConstruct;
-import java.sql.Time;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
@@ -17,14 +16,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 对外提供http接口，可以从指定offset开始消费，直接提交offset即可，方法2为测试先取消订阅再重新订阅的功能
  */
-@Controller
-@RequestMapping("/kafka")
+//@Controller
+//@RequestMapping("/kafka")
 public class KafkaController {
     @Value("${promotion.kafka.consumer.resetToTime:05:00:00}")
     private String resetToTime;
@@ -50,7 +48,7 @@ public class KafkaController {
     private static ReentrantLock consumerLock = new ReentrantLock(true);
     private static Condition condition = consumerLock.newCondition();
 
-    static {
+    /*static {
 
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");//
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "miner"); //消费者组
@@ -109,6 +107,16 @@ public class KafkaController {
                 }
             }
         });
+    }*/
+
+
+    @RequestMapping("/test")
+    @ResponseBody
+    public String test() throws InterruptedException {
+        //PromotionJdqConsumer.resetOffsetSwitch.set(true);
+        Atest bean = SpringContextHolder.getBean(Atest.class);
+        String test = bean.test();
+        return test;
     }
 
     @RequestMapping("/setOffset")
@@ -121,6 +129,16 @@ public class KafkaController {
                 System.out.println("获取到锁");
                 while (true) {
                     if (consumerWaitingState.get()) {
+                        Set<TopicPartition> assignment = consumer.assignment();
+                        Map<TopicPartition, Long> map = new HashMap<>();
+                        if (assignment.isEmpty()) {
+                            System.out.println("重置offset,没有订阅分区");
+                        }
+                        Long timestamp = System.currentTimeMillis();
+                        for (TopicPartition topicPartition : assignment) {
+                            map.put(topicPartition, timestamp);
+                        }
+                        Map<TopicPartition, OffsetAndTimestamp> resMap = consumer.offsetsForTimes(map);
                         TopicPartition topicPartition = new TopicPartition("testoffset", 0);
                         consumer.seek(topicPartition, offset);
                         consumerWaitingState.set(false);

@@ -81,4 +81,15 @@ public class Test {
 
 
     }
+
+    private static void test3(List<User> users) {
+        List<User> list1 = new ArrayList<>();
+        List<User> list2 = new ArrayList<>();
+
+        List<User> collect = list1.stream().map(u1 -> list2.stream().filter(u2 -> u2.getId().equals(u1.getId()))
+                .findFirst().map(c -> new User())
+                .orElse(null)
+        ).collect(Collectors.toList());
+
+    }
 }
