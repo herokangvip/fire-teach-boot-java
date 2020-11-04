@@ -10,12 +10,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/kafka")
 public class Atest {
 
-    @Value("${aaa}")
-    private String aaa;
 
     @RequestMapping("/test")
     @ResponseBody
     public String test(){
-        return aaa;
+        return "aaa";
     }
 }

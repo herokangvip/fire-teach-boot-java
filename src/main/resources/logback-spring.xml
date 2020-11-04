@@ -7,8 +7,11 @@
             <level>INFO</level>
         </filter>
         <encoder>
-            <pattern>[%date] [%p] [%logger] [%M] [%t] [%line] [%m]%n</pattern>
+            <pattern>[%date] [%p] [%logger] [%M] [%t] [%line] traceId:%X{number} [%m]%n</pattern>
         </encoder>
+        <!--<layout>
+            <pattern>[%date] [%p] [%logger] [%M] [%t] [%line] traceId:%X{number} [%m]%n</pattern>
+        </layout>-->
     </appender>
 
     <appender name="LogFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -17,8 +20,11 @@
             <fileNamePattern>${LOG_HOME}/main.log.%d{yyyy-MM-dd}</fileNamePattern>
         </rollingPolicy>
         <encoder>
-            <pattern>[%date] [%p] [%logger] [%M] [%t] [%line] [%m]%n</pattern>
+            <pattern>[%date] [%p] [%logger] [%M] [%t] [%line] traceId:%X{number} [%m]%n</pattern>
         </encoder>
+<!--        <layout>
+            <pattern>[%date] [%p] [%logger] [%M] [%t] [%line] traceId:%X{number} [%m]%n</pattern>
+        </layout>-->
     </appender>
 
     <appender name="orderLogAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -27,8 +33,11 @@
             <fileNamePattern>${LOG_HOME}/test.log.%d{yyyy-MM-dd}</fileNamePattern>
         </rollingPolicy>
         <encoder>
-            <pattern>[%date] [%p] [%logger] [%M] [%t] [%line] [%m]%n</pattern>
+            <pattern>[%date] [%p] [%logger] [%M] [%t] [%line] traceId:%X{number} [%m]%n</pattern>
         </encoder>
+        <!--<layout>
+            <pattern>[%date] [%p] [%logger] [%M] [%t] [%line] traceId:%X{number} [%m]%n</pattern>
+        </layout>-->
     </appender>
 
     <logger name="com.example.demo.controller.TestLogController" level="INFO" additivity="false">

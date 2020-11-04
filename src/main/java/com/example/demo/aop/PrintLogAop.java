@@ -50,9 +50,9 @@ public class PrintLogAop {
             String methodName = pjp.getSignature().getName();
             String className = pjp.getSignature().getDeclaringType().getName();
             Object[] args = pjp.getArgs();
-            logger.info("begin-args:" + Arrays.toString(args));
+            //logger.info("begin-args:" + Arrays.toString(args));
             Object proceed = pjp.proceed();
-            logger.info("end-res:" + Arrays.toString(args));
+            //logger.info("end-res:" + Arrays.toString(args));
             //logger.info("===耗时:{}ms", System.currentTimeMillis() - Long.parseLong(TraceLogHolder.get(TraceLogHolder.beginTime)));
             TraceLogHolder.remove();
             return proceed;

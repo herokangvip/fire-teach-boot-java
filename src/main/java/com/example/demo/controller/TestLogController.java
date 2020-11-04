@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/log")
 public class TestLogController {
-    Logger logger = new TraceLog(LoggerFactory.getLogger(TestLogController.class));
-    //Logger logger = LoggerFactory.getLogger(TestLogController.class);
+    //Logger logger = new TraceLog(LoggerFactory.getLogger(TestLogController.class));
+    Logger logger = LoggerFactory.getLogger(TestLogController.class);
 
 
     //@PrintLog
@@ -31,7 +31,7 @@ public class TestLogController {
     @ResponseBody
     public String test(String id) {
         logger.info("trace日志:{},:{}","a","b");
-        int insert = userService.insert(null);
+        //int insert = userService.insert(null);
         return "Hell World SpringBoot:111";
     }
 
