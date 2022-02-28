@@ -18,8 +18,8 @@ public class TimeClientHandler extends ChannelInboundHandlerAdapter {
     }
 
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        for (int i = 0; i < 100; i++) {
-            byte[] req = "0123456789#".getBytes();
+        for (int i = 0; i < 1; i++) {
+            byte[] req = "测试数据".getBytes();
             ByteBuf firstMessage = Unpooled.buffer(req.length);
             firstMessage.writeBytes(req);
             ctx.writeAndFlush(firstMessage);
