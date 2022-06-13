@@ -17,9 +17,9 @@
 
         <!--使用前替换数据库名,账号密码-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                connectionURL="jdbc:mysql://127.0.0.1:3306/activity_platform?characterEncoding=UTF8&amp;socketTimeout=60000&amp;allowMultiQueries=true"
+                connectionURL="jdbc:mysql://127.0.0.1:3306/sandytest?characterEncoding=UTF8&amp;socketTimeout=60000&amp;allowMultiQueries=true"
                 userId="root"
-                password="12345678">
+                password="123456">
         </jdbcConnection>
 
         <javaTypeResolver>

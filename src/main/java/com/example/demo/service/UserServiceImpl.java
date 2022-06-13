@@ -1,24 +1,17 @@
 package com.example.demo.service;
 
-import com.example.demo.controller.TestLogController;
 import com.example.demo.dao.UserMapper;
 import com.example.demo.domain.User;
-import com.example.demo.log.TraceLog;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
-    Logger logger = new TraceLog(LoggerFactory.getLogger(TestLogController.class));
 
 
 
@@ -36,7 +29,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(propagation = Propagation.REQUIRED)
     public int insert(User user) {
         try {
-            logger.info("trace日志:{},:{}","===","===");
+            log.info("trace日志:{},:{}","===","===");
 
             if (user == null) {
                 Thread.sleep(500L);

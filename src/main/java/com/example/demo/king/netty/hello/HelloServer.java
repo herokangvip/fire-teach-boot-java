@@ -13,7 +13,6 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
-import io.netty.util.concurrent.DefaultEventExecutor;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
 
 import java.util.List;
@@ -58,7 +57,6 @@ public class HelloServer {
                 .bind(8081)
                 .sync();
 
-        DefaultEventExecutor eventExecutor = new DefaultEventExecutor();
         DefaultEventExecutorGroup eventExecutors = new DefaultEventExecutorGroup(2);
         try {
             ChannelFuture future = new ServerBootstrap()

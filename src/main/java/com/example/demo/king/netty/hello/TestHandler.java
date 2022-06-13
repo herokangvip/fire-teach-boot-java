@@ -1,6 +1,6 @@
 package com.example.demo.king.netty.hello;
 
-import com.king.demo.king.netty.CustomProtocol;
+import com.example.demo.king.netty.CustomProtocol;
 import io.netty.buffer.UnpooledByteBufAllocator;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
