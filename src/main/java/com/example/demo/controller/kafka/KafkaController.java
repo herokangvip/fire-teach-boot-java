@@ -1,10 +1,9 @@
 package com.example.demo.controller.kafka;
 
-import com.example.demo.config.SpringContextHolder;
+import com.example.demo.config.ApplicationContextHolder;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.TopicPartition;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -114,7 +113,7 @@ public class KafkaController {
     @ResponseBody
     public String test() throws InterruptedException {
         //PromotionJdqConsumer.resetOffsetSwitch.set(true);
-        Atest bean = SpringContextHolder.getBean(Atest.class);
+        Atest bean = ApplicationContextHolder.getBean(Atest.class);
         String test = bean.test();
         return test;
     }

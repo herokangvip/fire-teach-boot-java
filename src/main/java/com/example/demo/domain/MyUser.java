@@ -1,7 +1,7 @@
 package com.example.demo.domain;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+
+import com.sun.istack.internal.NotNull;
 
 /**
  * Created by k on 2018/11/16.
@@ -9,9 +9,7 @@ import javax.validation.constraints.NotNull;
 public class MyUser {
 
 
-    @NotNull(groups = {Update.class})
     public Integer id;
-    @NotBlank(groups = {Add.class, Update.class})
     public String name;
 
     public Integer getId() {
