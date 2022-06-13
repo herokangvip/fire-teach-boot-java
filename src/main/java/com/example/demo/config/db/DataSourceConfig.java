@@ -15,6 +15,8 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 数据源配置
@@ -61,9 +63,25 @@ public class DataSourceConfig {
         return properties.initializeDataSourceBuilder().type(HikariDataSource.class).build();
     }
 
+    /**
+     * routingDataSource
+     * @return DataSource
+     */
+    @Bean
+    public DataSource routingDataSource(@Qualifier("masterDataSource") DataSource masterDataSource,
+                                          @Qualifier("slaveDataSource") DataSource slave1DataSource) {
+        Map<Object, Object> targetDataSources = new HashMap<>();
+        targetDataSources.put(DBTypeEnum.MASTER, masterDataSource);
+        targetDataSources.put(DBTypeEnum.SLAVE, slave1DataSource);
+        MyRoutingDataSource myRoutingDataSource = new MyRoutingDataSource();
+        myRoutingDataSource.setDefaultTargetDataSource(masterDataSource);
+        myRoutingDataSource.setTargetDataSources(targetDataSources);
+        return myRoutingDataSource;
+    }
+
     @Bean("sqlSessionFactory")
     public SqlSessionFactory mdbSqlSessionFactoryBean(
-            @Qualifier("masterDataSource") DataSource datasource) throws Exception {
+            @Qualifier("routingDataSource") DataSource datasource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(datasource);
         sqlSessionFactoryBean.setMapperLocations(

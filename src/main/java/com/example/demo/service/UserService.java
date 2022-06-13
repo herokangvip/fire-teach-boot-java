@@ -10,4 +10,6 @@ public interface UserService {
     int update();
 
     int update2();
+
+    String testCache(String key);
 }

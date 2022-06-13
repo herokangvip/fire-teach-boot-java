@@ -139,6 +139,28 @@ public class CacheConfig {
                 .build();
     }
 
+    @Bean("testRedisCache")
+    public CacheManager testCacheManager(@Qualifier("lettuceConnectionFactory")
+                                                 RedisConnectionFactory redisConnectionFactory) {
+        RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+                //前缀处理,redisKey
+                //键的序列化
+                .serializeKeysWith(RedisSerializationContext.SerializationPair
+                        .fromSerializer(new StringRedisSerializer()))
+                //值的序列化
+                .serializeValuesWith(RedisSerializationContext.SerializationPair
+                        .fromSerializer(RedisConfig.redisSerializer()))
+                //是否缓存空值
+                .disableCachingNullValues()
+                //过期时间
+                .entryTtl(Duration.ofDays(1));
+
+        return RedisCacheManager.RedisCacheManagerBuilder
+                .fromCacheWriter(RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory))
+                .cacheDefaults(cacheConfiguration)
+                .build();
+    }
+
 
 }
 

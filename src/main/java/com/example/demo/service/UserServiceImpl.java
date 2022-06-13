@@ -4,6 +4,7 @@ import com.example.demo.dao.UserMapper;
 import com.example.demo.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
-
-
 
 
     @Autowired
@@ -29,7 +28,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(propagation = Propagation.REQUIRED)
     public int insert(User user) {
         try {
-            log.info("trace日志:{},:{}","===","===");
+            log.info("trace日志:{},:{}", "===", "===");
 
             if (user == null) {
                 Thread.sleep(500L);
@@ -59,6 +58,12 @@ public class UserServiceImpl implements UserService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int update2() {
         return userMapper.update2();
+    }
+
+    @Cacheable(cacheManager = "testRedisCache", cacheNames = "cacheNames", key = "#root.targetClass+'['+#key+']'")
+    @Override
+    public String testCache(String key) {
+        return "返回结果";
     }
 
 

@@ -15,6 +15,17 @@ logging:
 
 spring:
   datasource:
+#    name: master
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/sandytest?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT%2b8&useAffectedRows=true&zeroDateTimeBehavior=convertToNull
+#    username: root
+#    password: 123456
+#    type: com.zaxxer.hikari.HikariDataSource
+#    hikari:
+#      minimum-idle: 6
+#      maximum-pool-size: 16
+#      pool-name: hikari-master
+#      connection-test-query: SELECT 1
     master:
       name: masterDb
       driver-class-name: com.mysql.cj.jdbc.Driver
