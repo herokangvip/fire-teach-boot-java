@@ -1,12 +1,17 @@
 package com.example.demo.controller;
 
+import com.example.demo.dao.AwardRecordMapper;
+import com.example.demo.domain.AwardRecord;
 import com.example.demo.service.UserService;
+import javafx.css.StyleableLongProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
 
 /**
  * ce
@@ -19,6 +24,15 @@ public class TestLogController {
     //Logger logger = new TraceLog(LoggerFactory.getLogger(TestLogController.class));
     Logger logger = LoggerFactory.getLogger(TestLogController.class);
 
+
+    @Resource
+    private AwardRecordMapper awardRecordMapper;
+    //@PrintLog
+    @RequestMapping("/awardRecord")
+    @ResponseBody
+    public AwardRecord test(Long id) {
+        return awardRecordMapper.selectByPrimaryKey(id);
+    }
 
     //@PrintLog
     @RequestMapping("/test")

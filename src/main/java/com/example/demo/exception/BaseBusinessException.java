@@ -19,7 +19,7 @@ public class BaseBusinessException extends RuntimeException {
         this.desc = desc;
     }
 
-    public BaseBusinessException(Throwable cause, int code, String desc) {
+    public BaseBusinessException(int code, String desc, Throwable cause) {
         super(cause);
         this.code = code;
         this.desc = desc;

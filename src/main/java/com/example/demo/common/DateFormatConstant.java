@@ -13,7 +13,7 @@ public interface DateFormatConstant {
     /**
      * 默认日期时间格式
      */
-    public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+    public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     /**
      * 默认日期格式
      */

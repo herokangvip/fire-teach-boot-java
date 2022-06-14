@@ -14,8 +14,8 @@ public class ParamException extends BaseBusinessException {
         super(code, desc);
     }
 
-    public ParamException(Throwable cause, int code, String desc) {
-        super(cause, code, desc);
+    public ParamException(int code, String desc, Throwable cause) {
+        super(code, desc, cause);
     }
 }
 

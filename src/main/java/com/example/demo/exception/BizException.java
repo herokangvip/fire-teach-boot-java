@@ -13,8 +13,8 @@ public class BizException extends BaseBusinessException {
         super(code, desc);
     }
 
-    public BizException(Throwable cause, int code, String desc) {
-        super(cause, code, desc);
+    public BizException(int code, String desc, Throwable cause) {
+        super(code, desc, cause);
     }
 }
 
