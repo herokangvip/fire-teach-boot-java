@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -21,24 +23,35 @@ import javax.annotation.Resource;
 @Controller
 @RequestMapping("/log")
 public class TestLogController {
-    //Logger logger = new TraceLog(LoggerFactory.getLogger(TestLogController.class));
+
     Logger logger = LoggerFactory.getLogger(TestLogController.class);
 
 
     @Resource
     private AwardRecordMapper awardRecordMapper;
-    //@PrintLog
+
     @RequestMapping("/awardRecord")
     @ResponseBody
     public AwardRecord test(Long id) {
         return awardRecordMapper.selectByPrimaryKey(id);
     }
 
+
+    /**
+     * post 也可以用@RequestParam
+     */
+    @RequestMapping(value = "/testPost", method = RequestMethod.POST)
+    @ResponseBody
+    public String testPost(@RequestParam Long id) {
+        System.out.println("testPost:" + id);
+        return "awardRecordMapper.selectByPrimaryKey(id)";
+    }
+
     //@PrintLog
     @RequestMapping("/test")
     @ResponseBody
     public String test(String id) {
-        logger.info("trace日志:{},:{}","a","b");
+        logger.info("trace日志:{},:{}", "a", "b");
         //int insert = userService.insert(null);
         return "Hell World SpringBoot:111";
     }
@@ -51,7 +64,6 @@ public class TestLogController {
         System.out.println(userService.getClass());
         return "Hell World SpringBoot:111";
     }
-
 
 
 }
