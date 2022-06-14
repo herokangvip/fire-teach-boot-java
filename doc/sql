@@ -1,0 +1,30 @@
+CREATE TABLE `t_user` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '用户名',
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '密码',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `t_award_record` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `act_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '活动id',
+  `source_bus_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '原业务id',
+  `bus_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'MD5后的业务id',
+  `user_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '用户id',
+  `award_type` int NOT NULL DEFAULT '0' COMMENT '奖品类型：1提现，2微信券，3sp券，4商家券',
+  `award_biz_data` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '奖品详情json',
+  `receive_request` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '领取请求',
+  `receive_response` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '领取响应',
+  `receive_status` int NOT NULL DEFAULT '0' COMMENT '状态，0待领取，1已领取，2领取成功 ，3领取失败，4补偿超最大次数',
+  `retry_times` int NOT NULL DEFAULT '0' COMMENT '发送次数',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `stock_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'stockId',
+  `amount` int NOT NULL DEFAULT '0' COMMENT '金额',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unq_bus_id` (`bus_id`) USING BTREE COMMENT 'busid',
+  KEY `idx_create_time` (`create_time`) USING BTREE COMMENT 'createTime',
+  KEY `idx_uid` (`user_id`) USING BTREE COMMENT 'userId',
+  KEY `idx_act_id` (`act_id`) USING BTREE COMMENT 'actId'
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='活动奖励记录';
+
