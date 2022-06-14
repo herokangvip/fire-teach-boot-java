@@ -7,22 +7,22 @@
     <context id="goods" targetRuntime="MyBatis3">
         <property name="javaFileEncoding" value="UTF-8"/>
         <!--注释配置 -->
-        <commentGenerator>
+        <commentGenerator type="com.example.demo.config.db.generator.MyCommentGenerator">
             <!--是否去除全部注释 -->
-            <property name="suppressAllComments" value="false"/>
-            <property name="suppressDate" value="false"/>
-            <property name="addRemarkComments" value="false"/>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+            <property name="addRemarkComments" value="true"/>
         </commentGenerator>
 
-
         <!--使用前替换数据库名,账号密码-->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
                 connectionURL="jdbc:mysql://127.0.0.1:3306/sandytest?characterEncoding=UTF8&amp;socketTimeout=60000&amp;allowMultiQueries=true"
                 userId="root"
                 password="123456">
         </jdbcConnection>
 
         <javaTypeResolver>
+            <!--forceBigDecimals:控制是否强制将DECIMAL和NUMERIC类型的JDBC字段转换成Java类型的 BigDecimal 默认为false,通常不须要配置-->
             <property name="forceBigDecimals" value="false"/>
             <!-- 增加下面这行，用于配置生成LocalDateTime对应数据库的DATETIME类型 -->
             <!--<property name="useJSR310Types" value="true" />-->
@@ -47,7 +47,7 @@
         </javaClientGenerator>
 
 
-        <table tableName="user_start_group_record" domainObjectName="UserStartGroupRecord"
+        <table tableName="t_award_record" domainObjectName="AwardRecord"
                enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false"

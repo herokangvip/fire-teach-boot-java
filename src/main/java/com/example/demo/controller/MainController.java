@@ -1,26 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.annotation.PrintLog;
-import com.example.demo.dao.OrderGroupMapper;
-import com.example.demo.dao.OrderTotalMapper;
-import com.example.demo.domain.OrderGroup;
-import com.example.demo.domain.OrderTotal;
-import com.example.demo.domain.vo.OrderTotalVo;
-import com.example.demo.domain.vo.OrderVo;
 import com.example.demo.service.UserService;
-import com.google.common.hash.BloomFilter;
-import com.google.common.hash.Funnel;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.*;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * ce
