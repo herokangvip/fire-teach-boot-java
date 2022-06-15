@@ -42,7 +42,7 @@ public class TestLogController {
      */
     @RequestMapping(value = "/testPost", method = RequestMethod.POST)
     @ResponseBody
-    public String testPost(@RequestParam Long id) {
+    public String testPost(@RequestParam Long id, @RequestParam String seqId) {
         System.out.println("testPost:" + id);
         return "awardRecordMapper.selectByPrimaryKey(id)";
     }

@@ -30,7 +30,7 @@ public class GlobalControllerExceptionHandler {
     public CommonResult<Object> baseBusinessExceptionHandler(Exception ex) {
         BaseBusinessException exception = (BaseBusinessException) ex;
         CommonResult<Object> result = new CommonResult<>(exception.getCode(), exception.getDesc(), null);
-        log.error("errorResult:{}", JsonUtils.toJsonString(result));
+        log.error("GlobalControllerExceptionHandler.errorResult:{}", JsonUtils.toJsonString(result));
         return result;
     }
 
@@ -43,9 +43,8 @@ public class GlobalControllerExceptionHandler {
     @ResponseBody
     @ExceptionHandler(value = Exception.class)
     public CommonResult<Object> errorHandler(Exception ex) {
-        CommonResult<Object> result = new CommonResult<>(CommonResultCode.SERVER_ERROR,
-                "server error", null);
-        log.error("errorResult:{},error:{}", JsonUtils.toJsonString(result), ex);
+        CommonResult<Object> result = new CommonResult<>(CommonResultCode.SERVER_ERROR, "server error", null);
+        log.error("GlobalControllerExceptionHandler.errorResult:{},error:", JsonUtils.toJsonString(result), ex);
         return result;
     }
 }

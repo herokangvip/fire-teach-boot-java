@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.slf4j.MDC;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.MultipartFile;
@@ -55,19 +56,18 @@ public class GlobalControllerLogConfig {
 
     private List<Object> filterArgs(Object[] objects) {
         return Arrays.stream(objects).filter(obj -> !(obj instanceof MultipartFile)
-                && !(obj instanceof HttpServletResponse)
-                && !(obj instanceof HttpServletRequest))
+                        && !(obj instanceof HttpServletResponse)
+                        && !(obj instanceof HttpServletRequest))
                 .peek(obj -> {
-                    if (obj instanceof String) {
-                        if ("seqId".equals(obj)) {
-                            MDC.put("seqId", String.valueOf(obj));
-                        }
-                    } else {
+
+                    try {
                         Map<String, Object> map = new HashMap<>();
                         BeanUtil.beanToMap(obj, map, false, true);
                         if (map.containsKey("seqId")) {
                             MDC.put("seqId", String.valueOf(map.get("seqId")));
                         }
+                    } catch (IllegalArgumentException e) {
+                        log.error("GlobalControllerLogConfig.filterArgs.error:", e);
                     }
                 })
                 .collect(Collectors.toList());
