@@ -3,10 +3,12 @@ package com.example.demo.utils.json;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.common.CommonResultCode;
+import com.example.demo.domain.vo.TestJsonVo;
 import com.example.demo.exception.JsonException;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -37,6 +39,9 @@ import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * server
@@ -94,14 +99,19 @@ public class JsonUtils {
         //或使用注解@JsonFormat(pattern = "yyyy-MM-dd'T' HH:mm:ss:SSS'Z'",timezone = "GMT+8")时间格式注解 类型必须是Date,否则不生效
         OBJECT_MAPPER.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true);
 
-        //默认时间戳只支持Date若想支持java8；
-        /*JavaTimeModule javaTimeModule = new JavaTimeModule();
+        //默认时间戳只支持Date若想支持java8的LocalDateTime等：
+        JavaTimeModule javaTimeModule = new JavaTimeModule();
         javaTimeModule.addSerializer(LocalDateTime.class, new CustomLocalDateTimeSerializer());
         javaTimeModule.addDeserializer(LocalDateTime.class, new CustomLocalDateTimeDeserializer());
+        javaTimeModule.addSerializer(LocalDate.class, new CustomLocalDateSerializer());
+        javaTimeModule.addDeserializer(LocalDate.class, new CustomLocalDateDeserializer());
+        javaTimeModule.addSerializer(LocalTime.class, new CustomLocalTimeSerializer());
+        javaTimeModule.addDeserializer(LocalTime.class, new CustomLocalTimeDeserializer());
         OBJECT_MAPPER.registerModule(javaTimeModule)
-                .registerModule(new ParameterNamesModule()).registerModule(new Jdk8Module());*/
+                .registerModule(new ParameterNamesModule()).registerModule(new Jdk8Module());
 
-        //或者需要将时间按特定格式序列化参考以下配置
+        //或者需要将时间按特定格式序列化参考以下配置,yyyy-MM-dd HH:mm:ss
+        /*
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DATE_TIME)));
         javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(DATE)));
@@ -116,14 +126,15 @@ public class JsonUtils {
         );
         OBJECT_MAPPER.registerModule(javaTimeModule)
                 .registerModule(new ParameterNamesModule()).registerModule(new Jdk8Module());
+        */
 
-        //或直接使用jackson模块处理时间等
+        //或直接使用jackson模块处理时间等,不推荐设置
         /*OBJECT_MAPPER.registerModule(new ParameterNamesModule())
                 .registerModule(new Jdk8Module())//处理java8的Optional/Stream等类型及其扩展类型
                 .registerModule(new JavaTimeModule());//处理java8时间api，LocalDateTime会被序列化为：[2021,3,12,23,45,11,818000000]
                 */
 
-        //"@class":"com.king.demo.domain.User"
+        //"@class":"com.king.demo.domain.User",不推荐设置
         //OBJECT_MAPPER.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,
         //        ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
 
@@ -215,6 +226,66 @@ public class JsonUtils {
             long timestamp = parser.getLongValue();
             return Instant.ofEpochMilli(timestamp).atZone(ZoneOffset.ofHours(8)).toLocalDateTime();
         }
+    }
+
+    static class CustomLocalDateSerializer extends JsonSerializer<LocalDate> {
+        @Override
+        public void serialize(LocalDate localDate, JsonGenerator g, SerializerProvider provider) throws IOException {
+            g.writeNumber(localDate.atStartOfDay().toInstant(ZoneOffset.ofHours(8)).toEpochMilli());
+        }
+    }
+
+    static class CustomLocalDateDeserializer extends JsonDeserializer<LocalDate> {
+        @Override
+        public LocalDate deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+            long timestamp = parser.getLongValue();
+            return Instant.ofEpochMilli(timestamp).atZone(ZoneOffset.ofHours(8)).toLocalDate();
+        }
+    }
+
+    static class CustomLocalTimeSerializer extends JsonSerializer<LocalTime> {
+        @Override
+        public void serialize(LocalTime localTime, JsonGenerator g, SerializerProvider provider) throws IOException {
+            g.writeNumber(localTime.atDate(LocalDate.now()).toInstant(ZoneOffset.ofHours(8)).toEpochMilli());
+        }
+    }
+
+    static class CustomLocalTimeDeserializer extends JsonDeserializer<LocalTime> {
+        @Override
+        public LocalTime deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+            long timestamp = parser.getLongValue();
+            return Instant.ofEpochMilli(timestamp).atZone(ZoneOffset.ofHours(8)).toLocalTime();
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        TestJsonVo testJsonVo = new TestJsonVo();
+        testJsonVo.setDate(new Date());
+        testJsonVo.setLocalDateTime(LocalDateTime.now());
+        testJsonVo.setLocalDate(LocalDate.now());
+        testJsonVo.setLocalTime(LocalTime.now());
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(10, 10, 1L,
+                TimeUnit.HOURS, new SynchronousQueue<>(), new ThreadPoolExecutor.CallerRunsPolicy());
+        for (int i = 0; i < 50; i++) {
+            try {
+                int finalI = i;
+                executor.submit(new Runnable() {
+                    @Override
+                    public void run() {
+                        String s = null;
+                        try {
+                            s = OBJECT_MAPPER.writeValueAsString(testJsonVo);
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println(finalI + s);
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        executor.shutdown();
     }
 
 }
