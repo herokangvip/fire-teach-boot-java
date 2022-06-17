@@ -6,6 +6,9 @@
 
     <context id="goods" targetRuntime="MyBatis3">
         <property name="javaFileEncoding" value="UTF-8"/>
+
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
         <!--注释配置 -->
         <commentGenerator type="com.example.demo.config.db.generator.MyCommentGenerator">
             <!--是否去除全部注释 -->

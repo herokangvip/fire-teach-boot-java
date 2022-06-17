@@ -249,36 +249,25 @@
 
     <build>
         <plugins>
-            <!-- mybatis generator 自动生成代码插件 -->
-<!--            <plugin>-->
-<!--                <groupId>org.mybatis.generator</groupId>-->
-<!--                <artifactId>mybatis-generator-maven-plugin</artifactId>-->
-<!--                <version>1.3.2</version>-->
-<!--                <configuration>-->
-<!--                    <configurationFile>${basedir}/src/main/resources/generator/generatorConfig.xml</configurationFile>-->
-<!--                    <overwrite>true</overwrite>-->
-<!--                    <verbose>true</verbose>-->
-<!--                </configuration>-->
-<!--                <dependencies>-->
-<!--                    <dependency>-->
-<!--                        <groupId>mysql</groupId>-->
-<!--                        <artifactId>mysql-connector-java</artifactId>-->
-<!--                        &lt;!&ndash;<scope>runtime</scope>&ndash;&gt;-->
-<!--                        <version>8.0.27</version>-->
-<!--                    </dependency>-->
-
-<!--                    &lt;!&ndash;<dependency>-->
-<!--                        <groupId>org.mybatis.generator</groupId>-->
-<!--                        <artifactId>mybatis-generator-core</artifactId>-->
-<!--                        <version>1.3.7</version>-->
-<!--                    </dependency>&ndash;&gt;-->
-<!--                    &lt;!&ndash;<dependency>-->
-<!--                        <groupId>com.haier.hairy</groupId>-->
-<!--                        <artifactId>mybatis-generator-core</artifactId>-->
-<!--                        <version>1.3.2</version>-->
-<!--                    </dependency>&ndash;&gt;-->
-<!--                </dependencies>-->
-<!--            </plugin>-->
+            <!-- mybatis generator 自动生成代码插件，使用插件需要自己打包mybatis-generator-core实现CommentGenerator -->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.2</version>
+                <configuration>
+                    <configurationFile>${basedir}/src/main/resources/generator/generatorConfig.xml</configurationFile>
+                    <overwrite>true</overwrite>
+                    <verbose>true</verbose>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <!--<scope>runtime</scope>-->
+                        <version>8.0.27</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
 
         </plugins>
     </build>
