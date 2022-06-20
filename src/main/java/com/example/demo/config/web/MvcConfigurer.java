@@ -30,9 +30,13 @@ public class MvcConfigurer implements WebMvcConfigurer {
         registry.addInterceptor(new HandlerInterceptor() {
             @Override
             public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-                String seqId = request.getParameter("seqId");
-                if (seqId != null && !"".equals(seqId)) {
-                    MDC.put("seqId", seqId);
+                try {
+                    String seqId = request.getParameter("seqId");
+                    if (seqId != null && !"".equals(seqId)) {
+                        MDC.put("seqId", seqId);
+                    }
+                } catch (Exception e) {
+                    log.error("MvcConfigurer.preHandle.putSeqId.error:", e);
                 }
                 return true;
             }
@@ -43,11 +47,15 @@ public class MvcConfigurer implements WebMvcConfigurer {
 
             @Override
             public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-                //MDC.remove("seqId");
+                try {
+                    MDC.remove("seqId");
+                } catch (Exception e) {
+                    log.error("MvcConfigurer.afterCompletion.removeSeqId.error:", e);
+                }
             }
         });
     }
-/*
+    /*
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //静态资源放行

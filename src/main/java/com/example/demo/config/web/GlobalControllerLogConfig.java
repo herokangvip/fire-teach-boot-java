@@ -6,6 +6,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -61,10 +62,12 @@ public class GlobalControllerLogConfig {
                 .peek(obj -> {
 
                     try {
-                        Map<String, Object> map = new HashMap<>();
-                        BeanUtil.beanToMap(obj, map, false, true);
-                        if (map.containsKey("seqId")) {
-                            MDC.put("seqId", String.valueOf(map.get("seqId")));
+                        if (StringUtils.isBlank(MDC.get("seqId"))) {
+                            Map<String, Object> map = new HashMap<>();
+                            BeanUtil.beanToMap(obj, map, false, true);
+                            if (map.containsKey("seqId")) {
+                                MDC.put("seqId", String.valueOf(map.get("seqId")));
+                            }
                         }
                     } catch (IllegalArgumentException e) {
                         log.error("GlobalControllerLogConfig.filterArgs.error:", e);
