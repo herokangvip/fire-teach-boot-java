@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
@@ -70,5 +73,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public User select() {
         return userMapper.select();
+    }
+
+    @Override
+    public void seeId(List<User> list) {
+        for (User user : list) {
+            System.out.println("222222=======:" + user.getId());
+        }
+    }
+    @Override
+    public void batchInsert(List<User> list) {
+        for (User user : list) {
+            userMapper.insertSelective(user);
+            System.out.println("11111=======:" + user.getId());
+        }
     }
 }
