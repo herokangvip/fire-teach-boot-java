@@ -107,6 +107,7 @@ public class JsonUtils {
         javaTimeModule.addDeserializer(LocalDate.class, new CustomLocalDateDeserializer());
         javaTimeModule.addSerializer(LocalTime.class, new CustomLocalTimeSerializer());
         javaTimeModule.addDeserializer(LocalTime.class, new CustomLocalTimeDeserializer());
+        //各种module：https://www.jianshu.com/p/8c2464e35efd
         OBJECT_MAPPER.registerModule(javaTimeModule)
                 .registerModule(new ParameterNamesModule()).registerModule(new Jdk8Module());
 
