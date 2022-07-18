@@ -1,6 +1,9 @@
 package com.example.demo.dao;
 
 import com.example.demo.domain.AwardRecord;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Date;
 
 public interface AwardRecordMapper {
     /**
@@ -38,4 +41,7 @@ public interface AwardRecordMapper {
      * @mbg.generated 2022-06-14
      */
     int updateByPrimaryKey(AwardRecord record);
+
+    int countByUserIdAndActivityCodeToday(@Param("userId") String userId,
+                                          @Param("start") Date todayStartDateTime, @Param("end") Date todayEndDateTime);
 }

@@ -212,4 +212,9 @@
       amount = #{amount,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="countByUserIdAndActivityCodeToday" resultType="java.lang.Integer">
+    select count(*) from t_award_record where
+      user_id = #{userId} and create_time<![CDATA[ >= ]]>#{start} and create_time<![CDATA[ < ]]>#{end}
+  </select>
 </mapper>

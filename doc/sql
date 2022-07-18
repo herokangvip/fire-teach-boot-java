@@ -28,3 +28,14 @@ CREATE TABLE `t_award_record` (
   KEY `idx_act_id` (`act_id`) USING BTREE COMMENT 'actId'
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='活动奖励记录';
 
+CREATE TABLE `t_welfare_user_task` (
+  `user_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'uid',
+  `task_id` bigint NOT NULL DEFAULT '0' COMMENT 'taskId',
+  `sign` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '限制类型:永久一次limitType；每日一次limitType_yyyyMMdd',
+  `sum_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'sumId',
+  `status` int NOT NULL DEFAULT '0' COMMENT '任务状态，0默认，1开启任务进行中，2任务完成',
+  `amount` int NOT NULL DEFAULT '0' COMMENT '任务提现金额',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`user_id`,`task_id`,`sign`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户任务';
