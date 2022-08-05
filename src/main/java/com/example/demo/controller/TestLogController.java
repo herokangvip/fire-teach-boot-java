@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.AsyncContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * ce
@@ -60,8 +63,10 @@ public class TestLogController {
     private UserService userService;
 
     @RequestMapping("/test2")
-    public String test2() {
+    public String test2(HttpServletRequest request, HttpServletResponse response) {
+        AsyncContext asyncContext = request.startAsync(request, response);
         System.out.println(userService.getClass());
+        asyncContext.complete();
         return "Hell World SpringBoot:111";
     }
 

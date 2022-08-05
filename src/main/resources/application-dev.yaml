@@ -4,6 +4,8 @@ server:
   port: 8080
 logging:
   config: classpath:log4j2-dev.xml
+
+
 #
 #mybatis:
 #  type-aliases-package: com.example.demo.domain
@@ -12,8 +14,17 @@ logging:
 #    map-underscore-to-camel-case: true
 #  #mapper文件扫描
 #  mapper-locations: mapper/mapping/*.xml,mybatis/extend/*.xml
-
 spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      #uri: mongodb://127.0.0.1:27027,127.0.0.1:27028,127.0.0.1:27029/mydb?slaveOk=true&replicaSet=rs0&write=1&connectTimeoutMS=30000&readPreference=primary
+      database: mydb
+      authentication-database: admin
+      transactionEnabled: true
+      #field-naming-strategy: org.springframework.data.mapping.model.SnakeCaseFieldNamingStrategy
+      #驼峰转下划线
+      property-naming-strategy: SNAKE_CASE
   datasource:
 #    name: master
 #    driver-class-name: com.mysql.cj.jdbc.Driver

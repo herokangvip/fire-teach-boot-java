@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
  *
  * @author sandykang
  */
-@Configuration
+//@Configuration
 @Aspect
 @Slf4j
 public class GlobalControllerLogConfig {

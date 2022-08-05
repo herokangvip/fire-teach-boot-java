@@ -39,3 +39,35 @@ CREATE TABLE `t_welfare_user_task` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`user_id`,`task_id`,`sign`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户任务';
+
+-- dtm 框架读屏障表为了解决空悬挂空回滚等
+create table barrier(
+  id bigint(22) PRIMARY KEY AUTO_INCREMENT,
+  trans_type varchar(45) default '',
+  gid varchar(128) default '',
+  branch_id varchar(128) default '',
+  op varchar(45) default '',
+  barrier_id varchar(45) default '',
+  reason varchar(45) default '' comment 'the branch type who insert this record',
+  create_time datetime DEFAULT now(),
+  update_time datetime DEFAULT now(),
+  key(create_time),
+  key(update_time),
+  UNIQUE key(gid, branch_id, op, barrier_id)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+-- 订单
+CREATE TABLE `order` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` bigint DEFAULT NULL,
+  `product_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `orderid` (`order_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- 商品库存
+CREATE TABLE `product` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `stock` bigint DEFAULT NULL,
+  `product_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `product_id` (`product_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

@@ -13,9 +13,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 //@EnableKafka
+@EnableTransactionManagement
 public class DemoApplication {
 
     public static void main(String[] args) {
