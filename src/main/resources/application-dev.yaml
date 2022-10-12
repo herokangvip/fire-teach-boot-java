@@ -15,6 +15,11 @@ logging:
 #  #mapper文件扫描
 #  mapper-locations: mapper/mapping/*.xml,mybatis/extend/*.xml
 spring:
+  elasticsearch:
+    rest:
+      mydb:
+       uris: http://127.0.0.1:9200
+       readTimeout: 3
   data:
     mongodb:
       uri: mongodb://localhost:27017

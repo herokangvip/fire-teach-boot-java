@@ -9,9 +9,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -19,7 +16,7 @@ import java.util.ArrayList;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {DemoApplication.class})
 public class EsDemoApplicationTests {
-    @Autowired
+   /* @Autowired
     private ElasticsearchTemplate elasticsearchTemplate;
     @Autowired
     private SkuEsDao skuEsDao;
@@ -98,7 +95,7 @@ public class EsDemoApplicationTests {
     @Test
     public void matchScroll() {
         // 创建查询条件对象
-       /* BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+       *//* BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
 
         // 拼接查询条件
         queryBuilder.must(QueryBuilders.rangeQuery("price").gte(3000).lte(10000)); //假设查询状态为1的
@@ -125,8 +122,8 @@ public class EsDemoApplicationTests {
         }
 
         // 最后释放查询
-        elasticsearchTemplate.clearScroll(scroll.getScrollId());*/
-    }
+        elasticsearchTemplate.clearScroll(scroll.getScrollId());*//*
+    }*/
 
 
 }

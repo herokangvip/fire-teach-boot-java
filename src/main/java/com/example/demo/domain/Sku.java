@@ -1,18 +1,18 @@
 package com.example.demo.domain;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+//import org.springframework.data.elasticsearch.annotations.Document;
+//import org.springframework.data.elasticsearch.annotations.Field;
+//import org.springframework.data.elasticsearch.annotations.FieldType;
 
 //@Document 作用在类，标记实体类为文档对象，一般有两个属性
 //        indexName：对应索引库名称
 //        type：对应在索引库中的类型
 //        shards：分片数量，默认5
 //        replicas：副本数量，默认1
-@Document(indexName = "sku_index", type = "sku_type", shards = 1, replicas = 1)
+//@Document(indexName = "sku_index", type = "sku_type", shards = 1, replicas = 1)
 public class Sku {
-    @Id
+   /* @Id
     private Long id;
 
     @Field(type = FieldType.Text, analyzer = "ik_max_word")
@@ -75,5 +75,5 @@ public class Sku {
                 ", category='" + category + '\'' +
                 ", price=" + price +
                 '}';
-    }
+    }*/
 }

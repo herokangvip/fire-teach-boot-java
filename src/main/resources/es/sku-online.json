@@ -1,0 +1,41 @@
+{
+  "settings": {
+    "number_of_shards": 5,
+    "number_of_replicas": 1
+  },
+  "mapping": {
+    "properties": {
+      "skuId": {
+        "type": "long"
+      },
+      "skuName": {
+        "type": "text",
+        "analyzer": "ik_smart"
+      },
+      "category": {
+        "type": "keyword"
+      },
+      "price": {
+        "type": "double"
+      },
+      "createTime": {
+        "type": "date",
+        "format": "yyyy-MM-dd HH:mm:ss"
+      },
+      "spInfo": {
+        "properties": {
+          "spStockId": {
+            "type": "keyword"
+          },
+          "stockId": {
+            "type": "keyword"
+          }
+        }
+      },
+      "desc": {
+        "type": "text",
+        "index": "false"
+      }
+    }
+  }
+}
