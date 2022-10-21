@@ -16,4 +16,7 @@ public interface UserMapper {
     int update();
 
     int update2();
+
+    int batchInsert(List<User> list);
+
 }

@@ -15,6 +15,16 @@
         values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
         )
     </insert>
+    <insert id ="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user(id, name, password) values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (null,
+            #{item.name},
+            #{item.password}
+            )
+        </foreach>
+    </insert >
+
 
 
     <update id="update">

@@ -64,4 +64,15 @@ public class DbTests {
         System.out.println("===:" + "count");
     }
 
+    @Test
+    public void context4() {
+        List<User> list = new ArrayList<>();
+        User user1 = new User(null, "user3", "user1");
+        User user2 = new User(null, "user4", "user2");
+        list.add(user1);
+        list.add(user2);
+        int i = userMapper.batchInsert(list);
+        System.out.println("===:" + i);
+    }
+
 }

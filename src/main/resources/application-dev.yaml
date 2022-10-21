@@ -6,14 +6,15 @@ logging:
   config: classpath:log4j2-dev.xml
 
 
-#
-#mybatis:
-#  type-aliases-package: com.example.demo.domain
-#  configuration:
-#    #自动驼峰式
-#    map-underscore-to-camel-case: true
-#  #mapper文件扫描
-#  mapper-locations: mapper/mapping/*.xml,mybatis/extend/*.xml
+
+mybatis:
+  type-aliases-package: com.example.demo.domain
+  configuration:
+    #自动驼峰式
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+  #mapper文件扫描
+  mapper-locations: mapper/mapping/*.xml,mybatis/extend/*.xml
 spring:
   elasticsearch:
     rest:

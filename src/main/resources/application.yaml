@@ -9,6 +9,8 @@ server:
 mybatis:
   mapper-locations: classpath:mapper/mapping/*.xml
   type-aliases-package: com.example.demo.domain
+  configuration:
+    use-generated-keys: true
   data:
     elasticsearch:
       #集群的名称默认:elasticsearch
