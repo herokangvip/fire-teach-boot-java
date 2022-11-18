@@ -64,6 +64,7 @@ public class JsonUtils {
     public static final String TIME = "HH:mm:ss";
 
     public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    public static final ObjectMapper OBJECT_MAPPER2 = new ObjectMapper();
 
     private static final ObjectMapper SORT_OBJECT_MAPPER = new ObjectMapper();
 
@@ -99,7 +100,7 @@ public class JsonUtils {
         //或使用注解@JsonFormat(pattern = "yyyy-MM-dd'T' HH:mm:ss:SSS'Z'",timezone = "GMT+8")时间格式注解 类型必须是Date,否则不生效
         OBJECT_MAPPER.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true);
 
-        //默认时间戳只支持Date若想支持java8的LocalDateTime等：
+        //默认时间戳只支持Date若想支持java8的LocalDateTime变时间戳，等：
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         javaTimeModule.addSerializer(LocalDateTime.class, new CustomLocalDateTimeSerializer());
         javaTimeModule.addDeserializer(LocalDateTime.class, new CustomLocalDateTimeDeserializer());
@@ -111,7 +112,10 @@ public class JsonUtils {
         OBJECT_MAPPER.registerModule(javaTimeModule)
                 .registerModule(new ParameterNamesModule()).registerModule(new Jdk8Module());
 
-        //或者需要将时间按特定格式序列化参考以下配置,yyyy-MM-dd HH:mm:ss
+        //默认时间戳只支持Date,如果想格式华Date为字符串可以这样或者参考：tip5
+        //OBJECT_MAPPER.setDateFormat(new SimpleDateFormat(DATE_TIME));
+
+        //tip5：或者需要将时间按特定格式序列化参考以下配置,yyyy-MM-dd HH:mm:ss
         /*
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DATE_TIME)));
@@ -129,7 +133,7 @@ public class JsonUtils {
                 .registerModule(new ParameterNamesModule()).registerModule(new Jdk8Module());
         */
 
-        //或直接使用jackson模块处理时间等,不推荐设置
+        //或直接使用jackson模块处理时间等,格式不是标准格式yyyy这样的而是[2021,3,12,23,45,11,818000000]
         /*OBJECT_MAPPER.registerModule(new ParameterNamesModule())
                 .registerModule(new Jdk8Module())//处理java8的Optional/Stream等类型及其扩展类型
                 .registerModule(new JavaTimeModule());//处理java8时间api，LocalDateTime会被序列化为：[2021,3,12,23,45,11,818000000]
@@ -265,28 +269,10 @@ public class JsonUtils {
         testJsonVo.setLocalDateTime(LocalDateTime.now());
         testJsonVo.setLocalDate(LocalDate.now());
         testJsonVo.setLocalTime(LocalTime.now());
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(10, 10, 1L,
-                TimeUnit.HOURS, new SynchronousQueue<>(), new ThreadPoolExecutor.CallerRunsPolicy());
-        for (int i = 0; i < 50; i++) {
-            try {
-                int finalI = i;
-                executor.submit(new Runnable() {
-                    @Override
-                    public void run() {
-                        String s = null;
-                        try {
-                            s = OBJECT_MAPPER.writeValueAsString(testJsonVo);
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                        }
-                        System.out.println(finalI + s);
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        executor.shutdown();
+
+        String s = OBJECT_MAPPER2.writeValueAsString(testJsonVo);
+        System.out.println(s);
+
     }
 
 }

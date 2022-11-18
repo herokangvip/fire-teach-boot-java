@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -63,7 +63,8 @@ public class UserServiceImpl implements UserService {
         return userMapper.update2();
     }
 
-    @Cacheable(cacheManager = "testRedisCache", cacheNames = "cacheNames", key = "#root.targetClass+'['+#key+']'")
+    //@Cacheable(cacheManager = "testRedisCache", cacheNames = "cacheNames", key = "#root.targetClass+'['+#key+']'")
+    @Cacheable(cacheManager = "testRedisCache", cacheNames = "cacheNames", key = "#key")
     @Override
     public String testCache(String key) {
         return "返回结果";
@@ -87,5 +88,11 @@ public class UserServiceImpl implements UserService {
             userMapper.insertSelective(user);
             System.out.println("11111=======:" + user.getId());
         }
+    }
+
+    @Cacheable(cacheManager = "testRedisCache", cacheNames = "cacheNames", key = "#root.targetClass+'['+#user+']'")
+    @Override
+    public String testCacheDate(Date date, User user) {
+        return "haha2";
     }
 }

@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.domain.User;
 
+import java.util.Date;
 import java.util.List;
 
 public interface UserService {
@@ -18,4 +19,6 @@ public interface UserService {
 
     public void seeId(List<User> list);
     public void batchInsert(List<User> list);
+
+    String testCacheDate(Date date, User user);
 }

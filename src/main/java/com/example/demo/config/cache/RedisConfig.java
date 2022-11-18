@@ -1,7 +1,9 @@
 package com.example.demo.config.cache;
 
 import com.example.demo.common.DateFormatConstant;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,6 +27,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
@@ -147,14 +150,41 @@ public class RedisConfig {
         return redisTemplate;
     }
 
+    @Primary
+    @Bean(name = "redisTemplate")
+    public RedisTemplate<String, Object> getRedisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
+        redisTemplate.setConnectionFactory(factory);
+        // key的序列化类型
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        // value的序列化类型
+        //redisTemplate.setValueSerializer(valueSerializer());
+        return redisTemplate;
+    }
+
+    public static void main(String[] args) throws Exception{
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        String s = objectMapper.writeValueAsString(1);
+        System.out.println(s);
+        System.out.println("s");
+        String s2 = objectMapper.writeValueAsString("1,2,3");
+        System.out.println(s2);
+        String s3 = objectMapper.readValue(s2, String.class);
+        System.out.println(s3);
+
+    }
+
     /**
      * 序列化器
      *
      * @return RedisSerializer
      */
-    public static RedisSerializer<Object> redisSerializer() {
-        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer =
-                new Jackson2JsonRedisSerializer<>(Object.class);
+    public static RedisSerializer<String> redisSerializer() {
+        Jackson2JsonRedisSerializer<String> jackson2JsonRedisSerializer =
+                new Jackson2JsonRedisSerializer<>(String.class);
         ObjectMapper objectMapper = new ObjectMapper();
         //objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
